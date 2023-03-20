@@ -2,79 +2,95 @@
 
 using namespace std;
 
-int calModular( int opt1 , int opt2, int mod, int operacion = 0) 
+class modular 
 {
-    opt1 %= mod;
-    opt2 %= mod;
 
-    if (operacion == 0) 
-    {
-        return (opt1 + opt2) % mod;
+    public:
 
-    }
-    else if (operacion == 1)
-    {
-        return (opt1 - opt2 + mod) % mod;
+        int op1;
+        int op2;
+        int mod;
+
+        modular(int _op1, int _mod, int _op2 = 0)
+        {
+            op1 = _op1;
+            op2 = _op2;
+            mod = _mod;
+
+            op1 %= mod;
+            op2 %= mod;
     
-    }
-    else if (operacion == 2)
-    {
-        return (opt1 * opt2) % mod;
-   
-    }
-    else 
-    {
-        return 0;
-    
-    }
-    
-}
-
-int inversa(int op, int mod) 
-{
-    int a = 0;
-    int b = 1;
-
-    int q;
-    int c;
-    int r;
-    int x{ op }, y{mod};
-
-
-    while (true) {
-
-        r = y - (x % y);
-        q = y / x;
-        c = calModular(a , b, mod, 1) * b;
-
-        a = b;
-        y = x;
-        x = r;
-        b = c;
-
-        cout << "\n" << c << ", " << q;
-
-        if (r == 1) {
-            break;
         }
 
-    }
+        int suma() 
+        {
+            return (op1 + op2) % mod;
 
-    return c;
+        }
 
-}
+        int resta()
+        {
+
+            return (op1 - op2 + mod) % mod;
+
+        }
+
+        int multiplicacion()
+        {
+            return (op1 * op2) % mod;
+        }
+
+        int inversa()
+        {
+
+            int a{ 0 };
+            int b{ 1 };
+            int q{ -1 };
+            int c{ -1 };
+            int r{ -1 };
+
+
+
+            while (r !=1)
+            {
+
+                if (op1 == 0)
+                {
+                    cout << "No se puede sacar inversa." << endl;
+                }
+
+                q = mod / op1;
+                c = a - q * b;
+
+                a = b;
+                b = c;
+
+                r = mod % op1;
+
+                cout << r << endl;
+
+                mod = op1;
+                op1 = r;
+
+            }
+
+            return c;
+
+        }
+
+        ~modular() {
+            op1 = 0;
+            op2 = 0;
+            mod = 0;
+        }
+
+};
 
 int main()
 {
-    cout << "Clase 1 18/03/2023 Jean Marc\n\n";
 
-    cout << "Calculadora modular:\n";
+    modular a(2, 2, 26); 
 
+    cout << a.inversa();
 
-    cout << calModular(36, 43, 2, 1);
-
-    cout << inversa(15, 26);
-
-
-    
 }
