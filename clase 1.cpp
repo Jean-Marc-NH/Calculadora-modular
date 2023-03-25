@@ -48,29 +48,37 @@ class modular
             int q{ -1 };
             int c{ -1 };
             int r{ -1 };
+            int x{ mod };
 
 
 
-            while (r !=1)
+            while (r != 1)
             {
+
+
+
+                q = x / op1;
+                c = a - q * b;
+
+                if (c < 0)
+                {
+                    c = mod + c;
+                }
+
+                a = b;
+                b = c;
+
+                r = x % op1;
+
+                x = op1;
+                op1 = r;
+
+
 
                 if (op1 == 0)
                 {
                     cout << "No se puede sacar inversa." << endl;
                 }
-
-                q = mod / op1;
-                c = a - q * b;
-
-                a = b;
-                b = c;
-
-                r = mod % op1;
-
-                cout << r << endl;
-
-                mod = op1;
-                op1 = r;
 
             }
 
@@ -89,7 +97,7 @@ class modular
 int main()
 {
 
-    modular a(2, 2, 26); 
+    modular a(7, 26, 2); 
 
     cout << a.inversa();
 
